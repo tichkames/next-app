@@ -1,3 +1,5 @@
+import { comments } from '../../data/comments'
+
 const CommentDetail = ({ comment }) => {
   return (
     <div>
@@ -10,10 +12,7 @@ export default CommentDetail
 
 // You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
 export const getStaticPaths = async () => {
-  const response = await fetch(`http://localhost:3000/api/comments`) // your fetch function here
-  const data = await response.json()
-
-  const paths = data.map(comment => {
+  const paths = comments.map(comment => {
     return {
         params: {
           commentId: `${comment.id}`
@@ -34,12 +33,11 @@ export const getStaticPaths = async () => {
 //- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
 export const getStaticProps = async (ctx) => {
   const { params } = ctx
-  const response = await fetch(`http://localhost:3000/api/comments/${params.commentId}`) // your fetch function here
-  const data = await response.json()
+  const comment = comments.find(comment => comment.id === parseInt(params.commentId))
 
   console.log('Generating page for commentId', params.commentId);
 
-  if(!data.id) {
+  if(!comment.id) {
     return {
       notFound: true
     }
@@ -47,7 +45,7 @@ export const getStaticProps = async (ctx) => {
 
   return {
     props: {
-      comment: data
+      comment: comment
     }
   }
 }
