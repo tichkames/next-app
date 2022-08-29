@@ -1,6 +1,8 @@
+import styles from '../styles/Profile.module.css'
+
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <div className={styles.highlight}>Profile</div>
   )
 }
 
