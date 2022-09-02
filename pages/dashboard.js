@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { getSession, signIn } from 'next-auth/react'
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -15,6 +16,16 @@ const Dashboard = () => {
     }
 
     fetchDashBoardData();
+
+    const securePage = async () => {
+      const session = await getSession()
+      console.log({ session })
+      if (!session) {
+        signIn()
+      }
+    }
+
+    securePage()
   }, [])
 
   if(isLoading){
