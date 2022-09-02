@@ -29,12 +29,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <title>Next App Playground</title>
           <meta name='description' content='Free tutorials on web development' />
         </Head>
-        <Header />
         <SessionProvider session={session} refetchInterval={5 * 60}>
-          <Navbar />
+          <Header />
+            <Navbar />
+          <Component {...pageProps} />
+          <Footer />
         </SessionProvider>
-        <Component {...pageProps} />
-        <Footer />
       </ThemeProvider>
     </>
   )
